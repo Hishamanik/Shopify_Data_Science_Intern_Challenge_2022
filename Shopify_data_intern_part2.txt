@@ -1,0 +1,57 @@
+Question 2:
+
+Problem a) How many orders were shipped by Speedy Express in total?
+
+
+Solution :
+
+---------SQL Query------------------------------------------
+SELECT COUNT(*) as Orders_SpeedyExpress
+FROM Shippers, Orders
+WHERE Shippers.ShipperID = Orders.ShipperID
+AND ShipperName = "Speedy Express"
+
+---------Output---------------------------------------------
+Orders_SpeedyExpress
+54
+
+
+
+Problem b) What is the last name of the employee with the most orders?
+
+Solution:
+---------SQL Query------------------------------------------------------
+SELECT Employees.LastName, COUNT(*) as num_orders
+FROM Employees, Orders
+WHERE Employees.EmployeeID = Orders.EmployeeID
+GROUP BY Employees.EmployeeID
+ORDER BY num_of_orders DESC
+LIMIT 1
+
+
+---------Output---------------------------------------------------------
+LastName	num_orders
+Peacock		    40
+
+
+
+Problem c) What product was ordered the most by customers in Germany?
+
+Solution:
+
+
+
+---------SQL Query------------------------------------------------------
+SELECT Products.ProductName, SUM(Quantity) AS TotalQuantity
+FROM Orders, OrderDetails, Customers, Products
+WHERE Customers.Country = "Germany" 
+AND OrderDetails.OrderID = Orders.OrderID 
+AND OrderDetails.ProductID = Products.ProductID 
+AND Customers.CustomerID = Orders.CustomerID
+GROUP BY Products.ProductID
+ORDER BY TotalQuantity DESC
+LIMIT 1;
+
+---------Output---------------------------------------------------------
+ProductName	TotalQuantity
+Boston Crab Meat	160
